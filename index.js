@@ -62,8 +62,16 @@ class Snake {
     }
 
     move(x, y) {
+        this.printSnake()
         this.head.move(x, y)
         this.body.forEach(snakeNode => snakeNode.move())
+        this.printSnake()
+    }
+    printSnake() {
+        console.log("==============")
+        console.log("head: ", this.head)
+        this.body.forEach((snakeNode, idx) => console.log(idx, ": ", snakeNode))
+        console.log("==============")
     }
 
 }
@@ -76,7 +84,7 @@ snake.draw()
 
 window.addEventListener("keydown", (e) => {
     e.preventDefault()
-    const speed = 5
+    const speed = 20.5
     switch (e.key) {
         case 'ArrowUp':
             snake.move(0, -1 * speed)
