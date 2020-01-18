@@ -78,7 +78,6 @@ snake.addNode()
 snake.addNode()
 snake.addNode()
 snake.draw()
-snake.printSnake()
 
 window.addEventListener("keydown", (e) => {
     e.preventDefault()
