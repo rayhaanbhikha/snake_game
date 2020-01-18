@@ -1,10 +1,5 @@
-var canvas = document.getElementById('snake-game');
-var ctx = canvas.getContext("2d");
-
-
 class SnakeNode {
-    constructor(x, y, parent = null, isHead = false, color) {
-        this.color = color
+    constructor(x, y, parent = null, isHead = false) {
         this.isHead = isHead
         this.size = 20
         this.prevX = 0
@@ -14,11 +9,7 @@ class SnakeNode {
         this.parent = parent
     }
     draw() {
-        if (this.color) {
-            ctx.fillStyle = this.color
-        } else {
-            ctx.fillStyle = this.isHead ? "red" : "green";
-        }
+        ctx.fillStyle = this.isHead ? "red" : "green";
         ctx.fillRect(this.x, this.y, this.size, this.size)
     }
 
@@ -46,17 +37,24 @@ class Snake {
         this.head = new SnakeNode(400, 400, null, true)
         this.body = []
     }
-    addNode(color) {
+
+    init(bodyLength = 4) {
+        for (let i = 0; i < bodyLength; i++) {
+            this.addNode();
+        }
+        this.draw();
+    }
+
+    addNode() {
         const bodyLength = this.body.length;
         if (bodyLength == 0) {
             const prevSnakeNode = this.head;
-            this.body.push(new SnakeNode(prevSnakeNode.x - prevSnakeNode.size, prevSnakeNode.y, this.head, false, color))
+            this.body.push(new SnakeNode(prevSnakeNode.x - prevSnakeNode.size, prevSnakeNode.y, this.head))
             return
         }
         const prevSnakeNode = this.body[bodyLength - 1]
-        this.body.push(new SnakeNode(prevSnakeNode.x - prevSnakeNode.size, prevSnakeNode.y, this.body[bodyLength - 1], false, color))
+        this.body.push(new SnakeNode(prevSnakeNode.x - prevSnakeNode.size, prevSnakeNode.y, this.body[bodyLength - 1]))
         return
-
     }
 
     draw() {
@@ -69,30 +67,3 @@ class Snake {
         this.body.forEach(snakeNode => snakeNode.move(x, y))
     }
 }
-
-const snake = new Snake()
-
-snake.addNode()
-snake.addNode()
-snake.addNode()
-snake.addNode()
-snake.addNode()
-snake.draw()
-
-window.addEventListener("keydown", (e) => {
-    e.preventDefault()
-    switch (e.key) {
-        case 'ArrowUp':
-            snake.move(0, -1)
-            break;
-        case 'ArrowDown':
-            snake.move(0, 1)
-            break;
-        case 'ArrowRight':
-            snake.move(1, 0)
-            break;
-        case 'ArrowLeft':
-            snake.move(-1, 0)
-            break;
-    }
-})
