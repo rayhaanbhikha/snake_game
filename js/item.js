@@ -3,7 +3,7 @@ class Item {
         this.x = x
         this.y = y
         this.r = 10
-        this.d = this.r * 2 
+        this.d = this.r * 2
     }
 
     draw() {
@@ -16,8 +16,8 @@ class Item {
     }
 
     clear() {
-        // ctx.clearRect(this.x-this.radius, this.y-this.radius-2, 2*this.radius+2, 2*this.radius+2)
-        ctx.clearRect(this.x-this.r, this.y-this.r, this.d, this.s)
+        console.log("clearing item")
+        ctx.clearRect(this.x - this.r, this.y - this.r, this.d, this.s)
     }
 
     radian(deg) {
@@ -25,6 +25,22 @@ class Item {
     }
 }
 
+function genCoords() {
+    let num = Math.round(Math.random() * canvas.width)
+    while (num % 10 !== 0) {
+        num++
+    }
+    if((num/10) % 2 === 0) {
+        while((num/10) % 2 === 0) {
+            num += 10
+        }
+    }
+    return num
+}
+
+// function drawItem() {
+//     console.log(Math.random()*
+// }
 // function drawItems() {
 //     for(let i=0; i<10; i++) {
 
