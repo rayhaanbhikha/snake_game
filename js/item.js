@@ -25,24 +25,58 @@ class Item {
     }
 }
 
-function genCoords() {
+function genCoord() {
     let num = Math.round(Math.random() * canvas.width)
     while (num % 10 !== 0) {
         num++
     }
-    if((num/10) % 2 === 0) {
-        while((num/10) % 2 === 0) {
+    if ((num / 10) % 2 === 0) {
+        while ((num / 10) % 2 === 0) {
             num += 10
         }
     }
+
     return num
 }
 
-// function drawItem() {
-//     console.log(Math.random()*
-// }
-// function drawItems() {
-//     for(let i=0; i<10; i++) {
+function onSnakeBody(genx, geny) {
+    const snakeNodes = [snake.head, ...snake.body]
+    for(let snakeNode of snakeNodes) {
+        const { x, y} = snakeNode
+        if(genx === x && geny === y) {
+            return true
+        }
+    }
+    return false
+}
 
-//     }
-// }
+class Items {
+    constructor(amount) {
+        this.amount = amount
+        // max items should be 5
+        this.items = []
+    }
+
+    genCoords() {
+        const x = genCoord()
+        const y = genCoord()
+        if (onSnakeBody(x, y)) {
+            return this.genCoords()
+        }
+        return { x, y}
+    }
+
+    genItem() {
+        const {x, y} = this.genCoords()
+        const item = new Item(x, y)
+        item.draw()
+        this.items.push(item)
+    }
+
+    genItems() {
+        for(let i=0; i<this.amount; i++) {
+            this.genItem()
+        }
+    }
+}
+

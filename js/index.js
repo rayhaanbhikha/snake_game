@@ -7,21 +7,21 @@ var cancelled = false;
 const snake = new Snake()
 snake.init()
 
-const item = new Item(30, 30)
-item.draw()
+const items = new Items(10, snake)
+items.genItems()
 
 function moveConstantly() {
     snake.move()
     if (!cancelled) {
         setTimeout(() => {
             console.log("new animation Id")
-            checkItemCollisions()
+            items.items.forEach(checkItemCollision)
             animationIDs.push(requestAnimationFrame(moveConstantly));
         }, 150)
     }
 }
 
-function checkItemCollisions() {
+function checkItemCollision(item) {
     const xMin = item.x - item.r
     const xMax = item.x + item.r
     const yMin = item.y - item.r
