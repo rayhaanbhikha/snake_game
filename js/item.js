@@ -60,6 +60,7 @@ class Items {
     genCoords() {
         const x = genCoord()
         const y = genCoord()
+
         if (onSnakeBody(x, y)) {
             return this.genCoords()
         }

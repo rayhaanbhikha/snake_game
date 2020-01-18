@@ -5,9 +5,9 @@ var animationIDs = []
 var cancelled = false;
 
 const snake = new Snake()
-const items = new Items(10, snake)
-
 snake.init()
+
+const items = new Items(10, snake)
 items.genItems()
 
 function moveConstantly() {
