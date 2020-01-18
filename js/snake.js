@@ -23,16 +23,16 @@ class SnakeNode {
             this.x = this.parent.prevX
             this.y = this.parent.prevY
         }
-        if(this.x >= canvas.width) {
+        if (this.x >= canvas.width) {
             this.x = 0
         }
-        if(this.x < 0) {
+        if (this.x < 0) {
             this.x = canvas.width - this.size
         }
-        if(this.y >= canvas.height) {
+        if (this.y >= canvas.height) {
             this.y = 0
         }
-        if(this.y < 0) {
+        if (this.y < 0) {
             this.y = canvas.height - this.size
         }
         this.draw()
@@ -46,6 +46,10 @@ class SnakeNode {
 
 class Snake {
     constructor() {
+        this.direction = {
+            x: 1,
+            y: 0
+        }
         this.head = new SnakeNode(400, 400, null, true)
         this.body = []
     }
@@ -74,7 +78,15 @@ class Snake {
         this.body.forEach(snakeNode => snakeNode.draw())
     }
 
-    move(x, y) {
+    changeDirection(x, y) {
+        this.direction = {
+            x,
+            y
+        }
+    }
+
+    move() {
+        const { x, y } = this.direction
         this.head.move(x, y)
         this.body.forEach(snakeNode => snakeNode.move(x, y))
     }
