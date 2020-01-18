@@ -5,6 +5,8 @@ const snake = new Snake()
 
 snake.init()
 
+// snake.move()
+
 window.addEventListener("keydown", (e) => {
     e.preventDefault()
     switch (e.key) {

@@ -23,6 +23,18 @@ class SnakeNode {
             this.x = this.parent.prevX
             this.y = this.parent.prevY
         }
+        if(this.x >= canvas.width) {
+            this.x = 0
+        }
+        if(this.x < 0) {
+            this.x = canvas.width - this.size
+        }
+        if(this.y >= canvas.height) {
+            this.y = 0
+        }
+        if(this.y < 0) {
+            this.y = canvas.height - this.size
+        }
         this.draw()
     }
 
