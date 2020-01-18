@@ -7,26 +7,52 @@ var cancelled = false;
 const snake = new Snake()
 snake.init()
 
+const item = new Item(30, 30)
+item.draw()
+
 function moveConstantly() {
     snake.move()
-    if(!cancelled) {
+    if (!cancelled) {
         setTimeout(() => {
             console.log("new animation Id")
+            checkItemCollisions()
             animationIDs.push(requestAnimationFrame(moveConstantly));
         }, 150)
     }
+}
+
+function checkItemCollisions() {
+    const xMin = item.x - item.r
+    const xMax = item.x + item.r
+    const yMin = item.y - item.r
+    const yMax = item.y + item.r
+    if ((snake.head.x <= xMax && snake.head.x >= xMin) && 
+        (snake.head.y <= yMax && snake.head.y >= yMin)) {
+        console.log("COLLISION")
+        item.clear()
+        delete item
+        snake.addNode()
+    }
+}
+
+function startGame() {
+    cancelled = false
+    animationIDs.push(requestAnimationFrame(moveConstantly));
+}
+
+function stopGame() {
+    cancelled = true
+    animationIDs.forEach(cancelAnimationFrame)
 }
 
 control.addEventListener('click', e => {
     const currentVal = e.target.innerText
     let newVal;
     if (currentVal == "start") {
-        cancelled = false
-        animationIDs.push(requestAnimationFrame(moveConstantly));
+        startGame()
         newVal = "stop"
     } else {
-        cancelled = true
-        animationIDs.forEach(cancelAnimationFrame)
+        stopGame()
         newVal = "start"
     }
 
@@ -50,3 +76,4 @@ window.addEventListener("keydown", (e) => {
             break;
     }
 })
+

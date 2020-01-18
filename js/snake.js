@@ -50,7 +50,7 @@ class Snake {
             x: 1,
             y: 0
         }
-        this.head = new SnakeNode(400, 400, null, true)
+        this.head = new SnakeNode(100, 100, null, true)
         this.body = []
     }
 
