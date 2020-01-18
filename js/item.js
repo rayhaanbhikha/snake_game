@@ -41,9 +41,9 @@ function genCoord() {
 
 function onSnakeBody(genx, geny) {
     const snakeNodes = [snake.head, ...snake.body]
-    for(let snakeNode of snakeNodes) {
-        const { x, y} = snakeNode
-        if(genx === x && geny === y) {
+    for (let snakeNode of snakeNodes) {
+        const { x, y } = snakeNode
+        if (genx === x && geny === y) {
             return true
         }
     }
@@ -63,20 +63,36 @@ class Items {
         if (onSnakeBody(x, y)) {
             return this.genCoords()
         }
-        return { x, y}
+        return { x, y }
     }
 
     genItem() {
-        const {x, y} = this.genCoords()
+        const { x, y } = this.genCoords()
         const item = new Item(x, y)
         item.draw()
         this.items.push(item)
     }
 
     genItems() {
-        for(let i=0; i<this.amount; i++) {
+        for (let i = 0; i < this.amount; i++) {
             this.genItem()
         }
+    }
+
+    checkCollisions() {
+        this.items.forEach((item, index) => {
+            const xMin = item.x - item.r
+            const xMax = item.x + item.r
+            const yMin = item.y - item.r
+            const yMax = item.y + item.r
+            if ((snake.head.x <= xMax && snake.head.x >= xMin) &&
+                (snake.head.y <= yMax && snake.head.y >= yMin)) {
+                console.log("COLLISION")
+                item.clear()
+                snake.addNode()
+                delete this.items[index]
+            }
+        })
     }
 }
 

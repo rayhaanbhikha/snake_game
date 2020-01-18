@@ -15,23 +15,9 @@ function moveConstantly() {
     if (!cancelled) {
         setTimeout(() => {
             console.log("new animation Id")
-            items.items.forEach(checkItemCollision)
+            items.checkCollisions()
             animationIDs.push(requestAnimationFrame(moveConstantly));
         }, 150)
-    }
-}
-
-function checkItemCollision(item) {
-    const xMin = item.x - item.r
-    const xMax = item.x + item.r
-    const yMin = item.y - item.r
-    const yMax = item.y + item.r
-    if ((snake.head.x <= xMax && snake.head.x >= xMin) &&
-        (snake.head.y <= yMax && snake.head.y >= yMin)) {
-        console.log("COLLISION")
-        item.clear()
-        delete item
-        snake.addNode()
     }
 }
 
